@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JSON响应</title>
+    <style>
+        #result {
+            width: 200px;
+            height: 200px;
+            border: 1px solid #8899bb;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="result"></div>
+    <script>
+        const result = document.getElementById('result');
+        window.onkeydown = function () {
+            const xhr = new XMLHttpRequest;
+            //把服务端返回的JSON字符串转换为对象的方式一
+            // xhr.responseType = 'json';
+            //初始化
+            xhr.open('GET', 'http://127.0.0.1:8000/json-server');
+            //发送
+            xhr.send();
+            //处理服务端返回结果
+            xhr.onreadystatechange = function () {
+                if (xhr.readyState === 4) {
+                    if (xhr.status >= 200 && xhr.status < 300) {
+                        //把服务端返回的JSON字符串转换为对象的方式二
+                        let data = JSON.parse(xhr.response);
+                        result.innerHTML = data.name;
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+
+</html>

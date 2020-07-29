@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AJAX POST 请求</title>
+    <style>
+        #result{
+            width: 200px;
+            height: 100px;
+            border: 1px solid orange;
+        }
+    </style>
+</head>
+<body>
+    <div id="result"></div>
+
+    <script>
+        const result = document.getElementById("result");
+        result.addEventListener("mouseover",function(){
+            //创建对象
+            const xhr = new XMLHttpRequest();
+            //初始化 设置请求类型与url
+            xhr.open('POST','http://127.0.0.1:8000/server');
+            //设置请求头
+            xhr.setRequestHeader('Content-type','application/x-www-form-urlencoded')
+            //设置post参数并发送
+            xhr.send('a=100&b=200');
+            //事件绑定
+            xhr.onreadystatechange = function(){
+                //如果服务端返回了所有结果
+                if(xhr.readyState === 4){
+                    if(xhr.status >= 200 && xhr.status <300){
+                        result.innerHTML = xhr.response;
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+</html>
